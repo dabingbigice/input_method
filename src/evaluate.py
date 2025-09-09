@@ -41,7 +41,7 @@ def run_evaluate():
     print()
     ######################################
     # 加载资源
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # 获取词表
     with open(config.PROCESSED_DIR / 'vocab.txt', 'r', encoding='utf-8') as f:
         vocal_list = [line.strip() for line in f.readlines()]
@@ -50,7 +50,7 @@ def run_evaluate():
     ######################################
     dataloader = get_dataloader(False)
     top1_acc, top5_acc = evaluate_model(model, dataloader, device)
-    print(f'{'=' * 10}')
+    print(f'===============')
     print(f'top1准确率:{top1_acc}')
     print(f'top1准确率:{top5_acc}')
 
