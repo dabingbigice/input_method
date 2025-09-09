@@ -63,7 +63,7 @@ def train():
     # 开始训练
     best_loss = float('inf')
     for epoch in range(config.EPOCHS):
-        print(f'{'=' * 10}Epoch{epoch}{'=' * 10}')
+        print(f'==============Epoch{epoch}==============')
 
         # 训练一轮的逻辑
         avg_loss = train_one_epoch(model, dataloader, loss_function, optimizer, device)

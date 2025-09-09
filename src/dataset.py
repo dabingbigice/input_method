@@ -26,7 +26,7 @@ class InputMethodDataset(Dataset):
 # 2.获取dataloader方法
 
 def get_dataloader(train=True):
-    data_path = config.PROCESSED_DIR / ('index_train.jsonl' if train else config.TRAIN_DATA_PATH / 'index_test.jsonl')
+    data_path = config.PROCESSED_DIR / ('index_train.jsonl' if train else config.PROCESSED_DIR / 'index_test.jsonl')
     dataset = InputMethodDataset(data_path)
     return DataLoader(dataset, batch_size=config.BATCH_SIZE, shuffle=True)
 
