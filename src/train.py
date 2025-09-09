@@ -46,7 +46,7 @@ def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
     # 准备数据
-    dataloader = get_dataloader()
+    dataloader = get_dataloader(True)
 
     # 获取词表
     with open(config.PROCESSED_DIR / 'vocab.txt', 'r', encoding='utf-8') as f:
