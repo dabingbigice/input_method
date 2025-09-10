@@ -49,7 +49,7 @@ def run_predict():
     with open(config.PROCESSED_DIR / 'vocab.txt', 'r', encoding='utf-8') as f:
         vocal_list = [line.strip() for line in f.readlines()]
     model = InputMethodModel(vocab_size=len(vocal_list))
-    model.load_state_dict(torch.load(config.MODELS_DIR / 'model.pt'))
+    model.load_state_dict(torch.load(config.MODELS_DIR / 'model.pt',map_location=device))
     ######################################
     print('请输入下一个word：(输入exit退出)')
     history_input = ''
@@ -68,5 +68,5 @@ def run_predict():
 
 
 if __name__ == '__main__':
-    top5_words = predict("我们团队正在")
+    top5_words = run_predict()
     print(top5_words)

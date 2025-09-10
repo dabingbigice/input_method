@@ -2,8 +2,8 @@ import jieba
 import torch
 from tqdm import tqdm
 
-from src import config
-from src.model import InputMethodModel
+import config
+from model import InputMethodModel
 from dataset import get_dataloader
 from predict import predict_batch
 
