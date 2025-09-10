@@ -13,10 +13,14 @@ def predict_batch(model, input_tensor):
     '''
     model.eval()
     with torch.no_grad():
+        # 输入索引给模型经过嵌入层
+        # 输出词向量进行rnn计算
+        # 对计算结果进行分类获取
         outputs = model(input_tensor)
         # outputs.shape[batch_size,vocab_size]
 
         top5_index = torch.topk(outputs, 5)[1]
+        # top5_index=[values],[index]
 
     top5_index_list = top5_index.tolist()
     return top5_index_list
@@ -25,6 +29,7 @@ def predict_batch(model, input_tensor):
 def predict(text, model, device, vocal_list):
     # 数据
     word_list = jieba.lcut(text)
+    # 词转换为索引
     word2index = {word: inndex for word, inndex in enumerate(vocal_list)}
     index2word = {inndex: word for word, inndex in enumerate(vocal_list)}
     index_list = [word2index.get(word, 0) for word in word_list]

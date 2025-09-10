@@ -15,15 +15,16 @@ def build_dataset(sentences, word2index):
     构建数据集
     :param sentences: 原始句子列被['我爱nlp,我不爱nlp]
     :param word2index: 词向量表
-    :return: [{input:[1,2,3,4,5],target:6},{input:[,2,3,4,5，6],target:7}.....]
+    :return: [{input:[1,2,3,4,5],target:6},{input:[2,3,4,5，6],target:7}.....]
     '''
-    # 如果get为none就赋值为0索引
+    # 如果get为none就赋值为0索引,获取句子所有词汇索引
     indexed_sentences = [[word2index.get(word, 0) for word in jieba.lcut(sentence)] for sentence in sentences]
     # [{input:[1,2,3,4,5],target:6},{input:[,2,3,4,5，6],target:7}.....]
     dataset = []
     for sentence in indexed_sentences:
         # sentence :[1,2,3,4,5]
         for i in range(len(sentence) - config.SEQ_LEN):
+            #切片滑动窗口
             input = sentence[i:i + config.SEQ_LEN]
             target = sentence[i + config.SEQ_LEN]
             dataset.append({'input': input, 'target': target})
@@ -40,7 +41,7 @@ def process():
     df = pd.read_json(config.RAW_DATA_DIR / 'synthesized_.jsonl', orient='records', lines=True)
     print(df.head())
 
-    # 2.抽取数据dialog
+    # 2.抽取处理数据dialog
     sentences = []
     for dialog in df['dialog']:
         for sentence in dialog:
@@ -63,7 +64,7 @@ def process():
             f.write(word + "\n")
     print(f'词表保存完成:{len(vocab_list)}')
 
-    # 构建词表,从去重后的集合中。去重、切词、构建都是使用jieba分词
+    # 构建map词表,从去重后的集合中。去重、切词、构建都是使用jieba分词
     word2index = {word: index for index, word in enumerate(vocab_list)}
     # 构建并保存训练集
     # 分词，索引，滑动窗口
