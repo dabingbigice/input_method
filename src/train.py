@@ -1,3 +1,4 @@
+import os
 import time
 
 import torch
@@ -71,12 +72,15 @@ def train():
         model.state_dict()
 
         print(f'loss:{avg_loss}')
-
+        if not os.path.exists(config.MODELS_DIR):
+            os.mkdir(config.MODELS_DIR)
         # 记录训练结果
         writer.add_scalar('loss', avg_loss, epoch)
         if avg_loss < best_loss:
             best_loss = avg_loss
+
             torch.save(model.state_dict(), config.MODELS_DIR / f'model.pt')
+
             print(f'best loss {best_loss},_保存成功')
         else:
             print('无须保持')
