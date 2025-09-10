@@ -30,14 +30,14 @@ def predict(text, model, device, vocal_list):
     # 数据
     word_list = jieba.lcut(text)
     # 词转换为索引
-    word2index = {word: inndex for word, inndex in enumerate(vocal_list)}
-    index2word = {inndex: word for word, inndex in enumerate(vocal_list)}
+    word2index = {word:index for index,word  in enumerate(vocal_list)}
+    index2word = {index:word  for index,word  in enumerate(vocal_list)}
     index_list = [word2index.get(word, 0) for word in word_list]
 
     input_tensor = torch.tensor(index_list).unsqueeze(0).to(device)
     # input_tensor.shape:[batch_size,seq_len]
     top5_index_list = predict_batch(model, input_tensor)
-    top5_words = [index2word[index] for index in top5_index_list[0]]
+    top5_words = [index2word[index ] for index in top5_index_list[0]]
     return top5_words
 
 
@@ -49,7 +49,7 @@ def run_predict():
     with open(config.PROCESSED_DIR / 'vocab.txt', 'r', encoding='utf-8') as f:
         vocal_list = [line.strip() for line in f.readlines()]
     model = InputMethodModel(vocab_size=len(vocal_list))
-    model.load_state_dict(torch.load(config.MODELS_DIR / 'model.pt',map_location=device))
+    model.load_state_dict(torch.load(config.MODELS_DIR / 'model.pt', map_location=device))
     ######################################
     print('请输入下一个word：(输入exit退出)')
     history_input = ''
