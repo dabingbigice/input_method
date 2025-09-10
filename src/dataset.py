@@ -28,7 +28,7 @@ class InputMethodDataset(Dataset):
 def get_dataloader(train=True):
     data_path = config.PROCESSED_DIR / ('index_train.jsonl' if train else config.PROCESSED_DIR / 'index_test.jsonl')
     dataset = InputMethodDataset(data_path)
-    return DataLoader(dataset, batch_size=config.BATCH_SIZE, shuffle=True)
+    return DataLoader(dataset, batch_size=config.BATCH_SIZE, shuffle=True,num_workers=4)
 
 
 if __name__ == '__main__':
