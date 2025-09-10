@@ -1,7 +1,7 @@
 import torch
 import jieba
 import config
-from src.model import InputMethodModel
+from model import InputMethodModel
 
 
 def predict_batch(model, input_tensor):
